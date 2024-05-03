@@ -15,14 +15,14 @@ When the number of queries is >= 5 throw an error with the message Endpoint load
 export const weakMap = new WeakMap();
 
 export function queryAPI(endpoint) {
-    if (weakMap.has(endpoint)) {
-        weakMap.set(endpoint, weakMap.get(endpoint) + 1);
-    } else {
-        weakMap.set(endpoint, 1);
-    }
+  if (weakMap.has(endpoint)) {
+    weakMap.set(endpoint, weakMap.get(endpoint) + 1);
+  } else {
+    weakMap.set(endpoint, 1);
+  }
 
-    if (weakMap.get(endpoint) + 1 >= 5) {
-        throw new Error('Endpoint load is high');
-    }
-    return weakMap;
+  if (weakMap.get(endpoint) + 1 >= 5) {
+    throw new Error('Endpoint load is high');
+  }
+  return weakMap;
 }
