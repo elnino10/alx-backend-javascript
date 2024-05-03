@@ -9,11 +9,9 @@ The string contains all the values of the set separated by -.
 */
 
 export default function cleanSet(Set, startString) {
-  const res = [];
-
-  if (startString === '' || startString === undefined) return '';
+  if (startString.length === 0 || startString === undefined) return '';
   return [...Set]
-  .filter(val => val.startsWith(startString))
-  .map(val => val.slice(startString.length))
-  .join('-');
+    .filter((val) => val !== undefined ? val.startsWith(startString) : '')
+    .map((val) => val !== undefined ? val.slice(startString.length) : '')
+    .join('-');
 }
