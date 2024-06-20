@@ -1,28 +1,33 @@
-const fs = require("fs");
+const fs = require('fs');
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
     const fields = {};
-    fs.readFile(path, "utf8", (err, data) => {
+    fs.readFile(path, 'utf8', (err, data) => {
       if (err || data === undefined) {
-        reject(Error("Cannot load the database"));
+        reject(Error('Cannot load the database'));
         return;
       }
 
-      if (data.length <= 1) reject(Error("Cannot load the database"));
-      data = data.toString().split("\n");
-      const numberOfStudents = data.slice(1).length;
+      if (data.length <= 1) {
+        reject(Error('Cannot load the database'));
+        return;
+      }
+      const dataStr = data.toString().split('\n');
+      const numberOfStudents = dataStr.slice(1).length;
       console.log(`Number of students: ${numberOfStudents}`);
 
-      data.slice(1).forEach((student) => {
-        student = student.split(",");
-        if (!fields[student[3]]) fields[student[3]] = [];
-        fields[student[3]].push(student[0]);
+      dataStr.slice(1).forEach((student) => {
+        const studentArr = student.split(',');
+        if (!fields[studentArr[3]]) fields[studentArr[3]] = [];
+        fields[studentArr[3]].push(studentArr[0]);
       });
-      for (let key in fields) {
-        console.log(
-          `Number of sudents in ${key}: ${fields[key].length}. List: ${fields[key]}`
-        );
+      for (const key in fields) {
+        if (fields[key]) {
+          console.log(
+            `Number of sudents in ${key}: ${fields[key].length}. List: ${fields[key].join(', ')}`,
+          );
+        }
       }
       resolve();
     });
